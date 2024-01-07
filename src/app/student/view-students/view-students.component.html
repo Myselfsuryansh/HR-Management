@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-header bg-info text-center">View Student Database</div>
+    <div class="col-2 ml-3 mt-2">
+        <button class="btn btn-primary btn-sm" (click)="goBack()">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+       </div>
+    <div class="card-body" *ngIf="items">
+        <form>
+            <div class="row mt-2">
+                <div class="form-group col">
+                  <label>Salutation</label>
+                  <p class="form-control">{{ items.salutation }}</p>
+                </div>
+        
+                <div class="form-group col">
+                  <label>Full Name</label>
+                  <p class="form-control">{{ items.firstName }}</p>
+                </div>
+        
+                <div class="form-group col">
+                  <label>Mobile</label>
+                  <p class="form-control">{{ items.phone }}</p>
+                </div>
+              </div>
+        
+              <div class="row mt-2">
+                <div class="form-group col">
+                  <label>Gender</label>
+                  <p class="form-control">{{ items.gender }}</p>
+                </div>
+        
+                <div class="form-group col">
+                  <label>Date of Birth</label>
+                  <p class="form-control">{{ items.dob }}</p>
+                </div>
+        
+                <div class="form-group col">
+                  <label>Email</label>
+                  <p class="form-control">{{ items.email }}</p>
+                </div>
+              </div>
+        
+              <div class="row mt-2">
+                <div class="form-group col">
+                  <label>Student Code</label>
+                  <p class="form-control">{{ items.studentCode }}</p>
+                </div>
+        
+                <div class="form-group col">
+                  <label>Department</label>
+                  <p class="form-control">{{ items.department }}</p>
+                </div>
+        
+              </div>
+              
+        </form>
+    </div>
+</div>

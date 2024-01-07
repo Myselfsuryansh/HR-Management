@@ -1,0 +1,209 @@
+<div class="card">
+    <div class="card-header bg-info text-center">Create Student Database</div>
+    <div class="col-2 ml-3 mt-2">
+        <button class="btn btn-primary btn-sm" (click)="goBack()">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+       </div>
+    <div class="card-body">
+      <form [formGroup]="addressForm" novalidate (ngSubmit)="onUpdate()">
+        <div class="row mt-2">
+          <div class="form-group col">
+            <label>Salutation</label>
+            <select
+              class="form-control"
+              formControlName="salutation"
+              name="salutation"
+              id="salutation"
+              [ngClass]="{ 'is-invalid': submitted && f.salutation.errors }"
+              required
+            >
+              <option value="">--Select--</option>
+              <option value="Mr">Mr</option>
+              <option value="Mrs">Mrs</option>
+              <option value="Miss">Miss</option>
+            </select>
+            <span
+              *ngIf="submitted && f.salutation?.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f.salutation.errors?.required"
+                >Student Code is Required</span
+              >
+            </span>
+          </div>
+  
+          <div class="form-group col">
+            <label>First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter First Name"
+              id="firstName"
+              formControlName="firstName"
+              [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
+              required
+            />
+            <span
+              *ngIf="submitted && f.firstName?.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f.firstName.errors?.required">
+                First Name is Required
+              </span>
+            </span>
+          </div>
+  
+          <div class="form-group col">
+            <label>Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter Last Name"
+              id="lastName"
+              formControlName="lastName"
+              [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
+              required
+            />
+            <span
+              *ngIf="submitted && f.lastName?.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f.lastName.errors?.required">
+                Last Name is Required
+              </span>
+            </span>
+          </div>
+        </div>
+  
+        <div class="row mt-2">
+          <div class="form-group col">
+            <label>Email</label>
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Enter your email address"
+              formControlName="email"
+              name="email"
+              id="email"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+              required
+            />
+            <span *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <span *ngIf="f.email.errors?.required">Email is Required</span>
+              <span *ngIf="f.email.errors?.email"
+                >Email must be valid email address</span
+              >
+            </span>
+          </div>
+          <div class="form-group col">
+            <label>Mobile</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter your mobile number"
+              formControlName="phone"
+              name="phone"
+              maxlength="10"
+              [ngClass]="{ 'is-invalid': submitted && f.phone.errors }"
+              required
+            />
+            <span *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+              <span *ngIf="f.phone.errors?.required">Phone is Required</span>
+            </span>
+          </div>
+          <div class="form-group col">
+            <label>StudentCode</label>
+            <select
+              class="form-control"
+              formControlName="studentCode"
+              name="studentCode"
+              id="studentCode"
+              [ngClass]="{ 'is-invalid': submitted && f.studentCode.errors }"
+              required
+            >
+              <option value="">--Select--</option>
+              <option value="HeadBoy">Head Boy</option>
+              <option value="Head Girl">Head Girl</option>
+              <option value="ClassRepresentrator">Class Representrator</option>
+            </select>
+            <span
+              *ngIf="submitted && f.studentCode?.errors"
+              class="invalid-feedback"
+            >
+              <span *ngIf="f.studentCode.errors?.required"
+                >Student Code is Required</span
+              >
+            </span>
+          </div>
+        </div>
+  
+        <div class="row mt-2">
+          <div class="form-group col">
+            <label>Gender</label>
+            <select
+              class="form-control"
+              formControlName="gender"
+              name="gender"
+              id="gender"
+              [ngClass]="{ 'is-invalid': submitted && f.gender.errors }"
+              required
+            >
+              <option value="">--Select--</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <span *ngIf="submitted && f.gender?.errors" class="invalid-feedback">
+              <span *ngIf="f.gender.errors?.required">Gender is Required</span>
+            </span>
+          </div>
+  
+          <div class="form-group col">
+            <label>Deprtment</label>
+            <select
+              class="form-control"
+              formControlName="department"
+              name="department"
+              id="department"
+              [ngClass]="{ 'is-invalid': submitted && f.department.errors }"
+              required
+            >
+              <option value="">--Select--</option>
+              <option value="Physics">Physics</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="ComputerScience">Computer Science</option>
+            </select>
+            <span *ngIf="submitted && f.department?.errors" class="invalid-feedback">
+              <span *ngIf="f.department.errors?.required">Department is Required</span>
+            </span>
+          </div>
+  
+          <div class="form-group col">
+            <label>Date of Birth</label>
+            <input
+              type="date"
+              class="form-control"
+              id="firstName"
+              formControlName="dob"
+              [ngClass]="{ 'is-invalid': submitted && f.dob.errors }"
+              required
+            />
+            <span *ngIf="submitted && f.dob?.errors" class="invalid-feedback">
+              <span *ngIf="f.dob.errors?.required">
+                Date of Birth is Required
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-success text-center mt-1 me-2">
+              Update
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

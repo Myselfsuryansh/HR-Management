@@ -1,0 +1,6 @@
+.row{
+    margin-top: 10vh;
+}
+input.ng-invalid.ng-touched {
+    border: red 1px solid;
+}

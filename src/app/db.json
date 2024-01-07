@@ -1,0 +1,52 @@
+{
+  "data": [
+    {
+      "department": "Manager",
+      "empName": "Suryansh Si",
+      "mobile": "7654022161",
+      "gender": "Male",
+      "joinDate": "2023-12-13",
+      "email": "suryanshsinhabth11@gmail.com",
+      "salary": "30000",
+      "password": "Bibhasinha@123",
+      "confirmPass": "Bibhasinha@123",
+      "empStatus": true,
+      "id": 3
+    },
+    {
+      "department": "Administrator",
+      "empName": "Satyam",
+      "mobile": "07999999999",
+      "gender": "Male",
+      "joinDate": "2023-12-14",
+      "email": "suryanshsinhabth21@gmail.com",
+      "salary": "30000",
+      "password": "Bibhasinha@123",
+      "confirmPass": "Bibhasinha",
+      "empStatus": true,
+      "id": 4
+    },
+    {
+      "department": "Manager",
+      "empName": "Kumar Styam",
+      "mobile": "8084499578",
+      "gender": "Male",
+      "joinDate": "2023-12-22",
+      "email": "suryanshsinha30@gmail.com",
+      "salary": "40000",
+      "password": "1234567890",
+      "confirmPass": "1234567890",
+      "empStatus": true,
+      "id": 5
+    }
+  ],
+  "student": [],
+  "api": [
+    {
+      "name": "Satyam ",
+      "email": "Satyam@gmail.com",
+      "password": "Bibhasinha@123",
+      "id": 1
+    }
+  ]
+}
