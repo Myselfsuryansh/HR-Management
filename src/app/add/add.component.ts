@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../service/data.service';
-import {  passwordMatchValidator } from '../Pipe/Validators';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, of } from 'rxjs';
+import {  of } from 'rxjs';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-add',
@@ -16,6 +15,8 @@ export class AddComponent implements OnInit {
   employeeData:any;
   submitted = false;
   isSaved = false;
+  password1: string = '';
+  confirmPass: string = '';
   constructor(private fb: FormBuilder, private service:DataService, private toastr:ToastrService, private router:Router) {}
 
   ngOnInit(): void {
@@ -29,7 +30,7 @@ export class AddComponent implements OnInit {
       salary: ['', Validators.required],
       password: ['', Validators.required],
       confirmPass: ['', Validators.required],
-      empStatus: [false, Validators.requiredTrue]
+      empStatus: ['', Validators.requiredTrue],
     });
     this.getEmployeeData();
   }
@@ -39,6 +40,9 @@ export class AddComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.employeeForm.value.empStatus==''){
+      this.toastr.error('CheckBox is not checked')
+    }
     this.submitted=true;
     this.isSaved = true;
     if (this.employeeForm.invalid) {
@@ -50,6 +54,7 @@ export class AddComponent implements OnInit {
     }
     
     this.service.postData(data).subscribe((res:any)=>{
+      
       if(res){
        this.toastr.success('Data Added Successfully')
         this.getEmployeeData();
@@ -135,6 +140,13 @@ export class AddComponent implements OnInit {
 
   goBack(){
     this.router.navigate(['/'])
+  }
+
+  password: string = '';
+  hidePassword: boolean = true;
+
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
   }
 
 }

@@ -1,46 +1,46 @@
 {
   "data": [
     {
-      "department": "Manager",
-      "empName": "Suryansh Si",
-      "mobile": "7654022161",
+      "department": "Accounts",
+      "empName": "Satyam",
+      "mobile": "9090909090",
       "gender": "Male",
-      "joinDate": "2023-12-13",
-      "email": "suryanshsinhabth11@gmail.com",
-      "salary": "30000",
+      "joinDate": "2001-08-07",
+      "email": "suryanshsinha30@gmail.com",
+      "salary": "25000",
       "password": "Bibhasinha@123",
       "confirmPass": "Bibhasinha@123",
       "empStatus": true,
-      "id": 3
-    },
-    {
-      "department": "Administrator",
-      "empName": "Satyam",
-      "mobile": "07999999999",
-      "gender": "Male",
-      "joinDate": "2023-12-14",
-      "email": "suryanshsinhabth21@gmail.com",
-      "salary": "30000",
-      "password": "Bibhasinha@123",
-      "confirmPass": "Bibhasinha",
-      "empStatus": true,
-      "id": 4
+      "id": 1
     },
     {
       "department": "Manager",
-      "empName": "Kumar Styam",
-      "mobile": "8084499578",
+      "empName": "Suryansh",
+      "mobile": "9090909090",
       "gender": "Male",
-      "joinDate": "2023-12-22",
+      "joinDate": "2001-08-07",
       "email": "suryanshsinha30@gmail.com",
-      "salary": "40000",
-      "password": "1234567890",
-      "confirmPass": "1234567890",
+      "salary": "25000",
+      "password": "Bibhasinha@12345",
+      "confirmPass": "Bibhasinha@12345",
       "empStatus": true,
-      "id": 5
+      "id": 2
     }
   ],
-  "student": [],
+  "student": [
+    {
+      "studentCode": "HeadBoy",
+      "salutation": "Mr",
+      "firstName": "satyam",
+      "lastName": "sinha",
+      "gender": "Male",
+      "department": "ComputerScience",
+      "dob": "2001-08-30",
+      "email": "satyam@gmail.com",
+      "phone": "8084499578",
+      "id": 1
+    }
+  ],
   "api": [
     {
       "name": "Satyam ",

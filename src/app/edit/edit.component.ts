@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../service/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -13,7 +13,7 @@ export class EditComponent implements OnInit{
   item:any;
   employeeForm!: FormGroup;
   submitted=false;
-  constructor(private service:DataService, private activatedRouter:ActivatedRoute, private fb:FormBuilder,private router:Router){
+  constructor(private service:DataService, private activatedRouter:ActivatedRoute, private fb:FormBuilder,private router:Router,private toastr:ToastrService){
 
   }
 
@@ -38,7 +38,7 @@ export class EditComponent implements OnInit{
       salary: ['', Validators.required],
       password: ['', Validators.required],
       confirmPass: ['', Validators.required],
-      empStatus: [false, Validators.requiredTrue]
+      empStatus: ['', Validators.requiredTrue]
     });
     
   };
@@ -48,6 +48,9 @@ export class EditComponent implements OnInit{
   
 
   onUpdate(){
+    if(this.employeeForm.value.empStatus==''){
+      this.toastr.error('CheckBox is not Checked')
+    }
     this.submitted=true;
 
     if(this.employeeForm.invalid){
