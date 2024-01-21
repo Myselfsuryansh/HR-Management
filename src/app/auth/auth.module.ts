@@ -10,14 +10,15 @@ import {HttpClientModule} from '@angular/common/http';
 @NgModule({
   declarations: [
     LoginComponent,
-    SignupComponent
+    SignupComponent,
   ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+  
   ]
 })
 export class AuthModule { }

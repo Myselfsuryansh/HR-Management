@@ -6,8 +6,8 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Database</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="">Employee Form</a>
-      <a mat-list-item routerLink="">Student Database</a>
+      <!-- <a mat-list-item>Employee Form</a>
+      <a mat-list-item>Student Database</a> -->
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -21,9 +21,29 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>HR-Management</span>
-      <span class="logout">Logout</span>
+
+      <div class="card flex justify-content-center rightmost" >
+        <p-dropdown  [options]="Drodown" [(ngModel)]="MyProfile" optionLabel="name" [showClear]="true" placeholder="My Profile" (onChange)="onDropdownChange($event)"></p-dropdown>
+    </div>
+
+      <!-- <div mdbDropdown class=" dropdown rightmost">
+        <button
+          class="btn btn-primary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton"
+          aria-expanded="false"
+          mdbDropdownToggle
+          
+        >
+        Profile
+        </button>
+        <ul mdbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><a class="dropdown-item" >My Profile</a></li>
+          <li><a class="dropdown-item" (click)="Logout()" style="cursor: pointer;">Logout</a></li>
+        </ul>
+      </div> -->
     </mat-toolbar>
-   <button class="btn btn-info mx-2 mt-2" routerLink="add">Employee Database</button>
-   <button class="btn btn-info mt-2" routerLink="addStudent">Student Database</button>
+   <button class="btn btn-info mx-2 mt-2" (click)="onChangeNavigation()">Employee Database</button>
+   <button class="btn btn-info mt-2" (click)="onChangeNavigationStudent()">Student Database</button>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -4,6 +4,7 @@ import { DataService } from '../service/data.service';
 import { ToastrService } from 'ngx-toastr';
 import {  of } from 'rxjs';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -12,13 +13,13 @@ import { Router } from '@angular/router';
 export class AddComponent implements OnInit {
 
   employeeForm!: FormGroup;
-  employeeData:any;
+  employeeData:any[]=[];
   submitted = false;
   isSaved = false;
   password1: string = '';
   confirmPass: string = '';
   constructor(private fb: FormBuilder, private service:DataService, private toastr:ToastrService, private router:Router) {}
-
+  toggleStatusArray: boolean[] = this.employeeData.map(() => false);
   ngOnInit(): void {
     this.employeeForm = this.fb.group({
       department: ['', Validators.required],
@@ -58,6 +59,7 @@ export class AddComponent implements OnInit {
       if(res){
        this.toastr.success('Data Added Successfully')
         this.getEmployeeData();
+    
       }
       else{
        this.toastr.error(res.error,'error')
@@ -100,27 +102,62 @@ export class AddComponent implements OnInit {
 
   }
 
-  onDelete(id:any){
+  // onDelete(id:any){
     
-    if(confirm('Are you sure want to delete')){
-      if('Ok'){
-        this.service.delete(id).subscribe((res:any)=>{
-          if(res){
-            alert('Deleted');
-            this.getEmployeeData();
-          }
-          else{
-            alert('Error')
-          }
-        })
+  //   if(confirm('Are you sure want to delete')){
+  //     if('Ok'){
+  //       this.service.delete(id).subscribe((res:any)=>{
+  //         if(res){
+  //           alert('Deleted');
+  //           this.getEmployeeData();
+  //         }
+  //         else{
+  //           alert('Error')
+  //         }
+  //       })
        
 
 
+  //     }
+  //     else{
+  //       alert('Check once')
+  //     }
+  //   }
+  // }
+  onDelete(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this data!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.service.delete(id).subscribe((res: any) => {
+          if (res) {
+            Swal.fire(
+              'Deleted!',
+              'The data has been deleted.',
+              'success'
+            );
+            this.getEmployeeData();
+          } else {
+            Swal.fire(
+              'Error',
+              'Unable to delete the data.',
+              'error'
+            );
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Not Cancelled',
+          'The data is safe :)',
+          'info'
+        );
       }
-      else{
-        alert('Check once')
-      }
-    }
+    });
   }
 
   keyPressNumbers(event:any) {
@@ -139,7 +176,7 @@ export class AddComponent implements OnInit {
   // }
 
   goBack(){
-    this.router.navigate(['/'])
+    this.router.navigate(['/home'])
   }
 
   password: string = '';
@@ -148,5 +185,10 @@ export class AddComponent implements OnInit {
   togglePasswordVisibility(): void {
     this.hidePassword = !this.hidePassword;
   }
+  onToggleChange(index: number) {
+    this.toggleStatusArray[index] = !this.toggleStatusArray[index];
+  }
+
+  
 
 }

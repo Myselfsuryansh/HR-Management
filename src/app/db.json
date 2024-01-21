@@ -1,30 +1,82 @@
 {
   "data": [
     {
-      "department": "Accounts",
-      "empName": "Satyam",
-      "mobile": "9090909090",
-      "gender": "Male",
-      "joinDate": "2001-08-07",
+      "department": "Manager",
+      "empName": "qwertyui",
+      "mobile": "2345678345",
+      "gender": "Female",
+      "joinDate": "2024-01-09",
       "email": "suryanshsinha30@gmail.com",
-      "salary": "25000",
-      "password": "Bibhasinha@123",
-      "confirmPass": "Bibhasinha@123",
+      "salary": "4745676",
+      "password": "Bibhasinha",
+      "confirmPass": "Bibhasinha",
       "empStatus": true,
-      "id": 1
+      "id": 7
     },
     {
       "department": "Manager",
-      "empName": "Suryansh",
-      "mobile": "9090909090",
+      "empName": "cfgdfg",
+      "mobile": "8084499578",
       "gender": "Male",
-      "joinDate": "2001-08-07",
-      "email": "suryanshsinha30@gmail.com",
-      "salary": "25000",
-      "password": "Bibhasinha@12345",
-      "confirmPass": "Bibhasinha@12345",
+      "joinDate": "2024-01-25",
+      "email": "suryanshsinhabth11@gmail.com",
+      "salary": "455465",
+      "password": "rtrerteyy",
+      "confirmPass": "rtrerteyy",
       "empStatus": true,
-      "id": 2
+      "id": 8
+    },
+    {
+      "department": "Manager",
+      "empName": "Hello Wold",
+      "mobile": "7867865786",
+      "gender": "Female",
+      "joinDate": "2024-01-04",
+      "email": "hello@gmail.ocm",
+      "salary": "3545465446",
+      "password": "gyrtr",
+      "confirmPass": "gyrtr",
+      "empStatus": true,
+      "id": 9
+    },
+    {
+      "department": "Administrator",
+      "empName": "ppop",
+      "mobile": "1111111111",
+      "gender": "Male",
+      "joinDate": "2024-01-19",
+      "email": "43543@gmail.ci.com",
+      "salary": "35454",
+      "password": "121212",
+      "confirmPass": "121212",
+      "empStatus": true,
+      "id": 10
+    },
+    {
+      "department": "Accounts",
+      "empName": "qwerty",
+      "mobile": "5654544664",
+      "gender": "Male",
+      "joinDate": "2024-01-12",
+      "email": "rt@yahoo.com",
+      "salary": "2434",
+      "password": "12345",
+      "confirmPass": "12345",
+      "empStatus": true,
+      "id": 11
+    },
+    {
+      "department": "Accounts",
+      "empName": "qwertyu",
+      "mobile": "2345623456",
+      "gender": "Male",
+      "joinDate": "2024-01-27",
+      "email": "w@yahpo.com",
+      "salary": "777087",
+      "password": "12345",
+      "confirmPass": "12345",
+      "empStatus": true,
+      "id": 12
     }
   ],
   "student": [
@@ -43,9 +95,9 @@
   ],
   "api": [
     {
-      "name": "Satyam ",
-      "email": "Satyam@gmail.com",
-      "password": "Bibhasinha@123",
+      "name": "Suryansh",
+      "email": "suryansh@gmail.com",
+      "password": "1234567890",
       "id": 1
     }
   ]

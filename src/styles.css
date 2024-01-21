@@ -3,9 +3,32 @@
 /* styles.css or styles.scss */
 
 @import "~@fortawesome/fontawesome-free/css/all.css";
-
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
 input.ng-invalid.ng-touched {
     border: red 1px solid;
 }
+
+.ngx-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: red;
+  }
+
+::ng-deep .ngx-spinner {
+    /* Your custom spinner styles */
+    color: #ffffff; /* Set text color to white */
+    font-size: 48px; /* Set font size to 24 pixels */
+  }
+  
+::ng-deep .ngx-spinner h1 {
+    /* Your custom text styles */
+    color: #ffffff; /* Set text color to white */
+    font-size: 24px; /* Set font size to 24 pixels */
+    margin-top: 10px; /* Adjust top margin as needed */
+  }
+  
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

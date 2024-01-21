@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/service/data.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-students-data',
   templateUrl: './add-students-data.component.html',
@@ -166,22 +166,58 @@ export class AddStudentsDataComponent implements OnInit {
   }
 
   goBack(){
-    this.router.navigate(['/'])
+    this.router.navigate(['/home'])
   }
 
-  onDelete(id:any){
-    if(confirm('Are you sure want to delete? Yes or No'))
-    this.service.deleteStudentData(id).subscribe((res:any)=>{
-      if(res){
-        this.toastr.success('Data Deleted Successfully');
-        this.getStudentData();
-      }
-      else{
-        this.toastr.error(res.error)
-      }
+  // onDelete(id:any){
+  //   if(confirm('Are you sure want to delete? Yes or No'))
+  //   this.service.deleteStudentData(id).subscribe((res:any)=>{
+  //     if(res){
+  //       this.toastr.success('Data Deleted Successfully');
+  //       this.getStudentData();
+  //     }
+  //     else{
+  //       this.toastr.error(res.error)
+  //     }
       
-    })
+  //   })
     
+  // }
+
+  onDelete(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this data!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.service.deleteStudentData(id).subscribe((res: any) => {
+          if (res) {
+            Swal.fire(
+              'Deleted!',
+              'The data has been deleted.',
+              'success'
+            );
+            this.getStudentData();
+          } else {
+            Swal.fire(
+              'Error',
+              'Unable to delete the data.',
+              'error'
+            );
+          }
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'The data is safe :)',
+          'info'
+        );
+      }
+    });
   }
 
   onReset(){

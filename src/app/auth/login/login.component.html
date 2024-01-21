@@ -1,39 +1,56 @@
-<div class="container">
+<div class="body">
+  <div class="container">
     <div class="form-signin w-100 m-auto">
-        <form [formGroup]="signinForm" (ngSubmit)="loginUser()">
-          <h3 class="h3 mb-3 font-weight-normal text-center">Please sign in</h3>
-          <div class="mb-3">
-            <label>Email</label>
-            <input
-              type="email"
-              class="form-control"
-              formControlName="email"
-              placeholder="Enter email"
-              [ngClass]="{'is-invalid':submitted && f.email.errors}"
-              required
-            />
-            <span *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                <span *ngIf="f.email.errors?.required">Email is Required</span>
-                <span *ngIf="f.email.errors?.email">Enter correct email address</span>
-            </span>
-          </div>
-          <div class="mb-3">
-            <label>Password</label>
-            <input
-              type="password"
-              class="form-control"
-              formControlName="password"
-              [ngClass]="{'is-invalid':submitted && f.password.errors}"
-              placeholder="Password"
-              required
-            />
-            <span *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                <span *ngIf="f.password.errors?.required">Password is Required</span>
-            </span>
-          </div>
-          <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Sign in</button>
-          </div>
-        </form>
-      </div>
+      <form [formGroup]="signinForm" (ngSubmit)="loginUser()">
+        <h3 class="h3 mb-3 font-weight-normal text-center">Please sign in</h3>
+        <div class="mb-3">
+          <label>Email</label>
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="Enter email"
+            [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+            required
+          />
+          <span *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <span *ngIf="f.email.errors?.required">Email is Required</span>
+            <span *ngIf="f.email.errors?.email"
+              >Enter correct email address</span
+            >
+          </span>
+        </div>
+        <div class="mb-3">
+          <label>Password</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            placeholder="Password"
+            required
+          />
+          <span *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <span *ngIf="f.password.errors?.required"
+              >Password is Required</span
+            >
+          </span>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary" >Login</button>
+        </div>
+        <!-- <div class="d-grid mt-2">
+          <h2 class="left">New User? SignUp Here</h2>
+          <button  type="button" class="btn btn-block btn-secondary col-4" (click)="onsignUp()">Sign Up</button>
+          <button  type="button" class="btn btn-block btn-secondary col-4" (click)="onsignUp()">Forget Pasword</button>
+        </div> -->
+        <div class="d-grid mt-2">
+          <h2 class="left">New User? SignUp Here</h2>
+          <button type="button" class="btn btn-block btn-secondary col-4" (click)="onsignUp()">Sign Up</button>
+          <button type="button" class="btn btn-block btn-secondary col-4 ms-auto down" (click)="onForgetPassword()">Forget Password</button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
 </div>

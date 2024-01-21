@@ -34,6 +34,11 @@ export class SignupComponent implements OnInit {
     if(this.signupForm.invalid){
       return
     }
+
+    let data ={
+      ...this.signupForm.value.email,
+      ...this.signupForm.value.password
+    }
     this.authService.signUp(this.signupForm.value).subscribe((res:any) => {
       if (res) {
         this.toastr.success('Signup Successfully.');
@@ -42,4 +47,20 @@ export class SignupComponent implements OnInit {
       }
     });
   }
+
+  isSignUp: boolean = true;
+toggleSignUp() {
+  this.isSignUp = !this.isSignUp;
+}
+
+onLogin(){
+  this.router.navigate(['/login'])
+
+}
+
+hidePassword: boolean = true;
+
+togglePasswordVisibility(): void {
+  this.hidePassword = !this.hidePassword;
+}
 }

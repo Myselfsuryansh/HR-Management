@@ -54,6 +54,7 @@
             type="text"
             class="form-control"
             formControlName="mobile"
+            (keypress)="keyPressNumbers($event)"
             name="mobile"
             maxlength="10"
             
@@ -244,27 +245,30 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let data of employeeData">
+          <tr *ngFor="let data of employeeData; let i = index" >
+            
             <td>{{ data.department }}</td>
             <td>{{ data.empName }}</td>
             <td>{{ data.mobile }}</td>
             <td>{{ data.gender }}</td>
             <td>{{ data.joinDate }}</td>
             <td>{{ data.email }}</td>
-            <td class="text-center">
+            <td class="text-center"> <mat-slide-toggle [(ngModel)]="toggleStatusArray[i]" color="primary" (onChange)="onToggleChange(i)"></mat-slide-toggle>
               <button
                 [routerLink]="['/edit', data.id]"
                 class="btn btn-primary me-2"
+                [disabled]="toggleStatusArray[i]"
               >
                 Edit
               </button>
               <button
                 [routerLink]="['/view', data.id]"
                 class="btn btn-info me-2"
+                [disabled]="toggleStatusArray[i]"
               >
                 View
               </button>
-              <button class="btn btn-danger me-2" (click)="onDelete(data.id)">
+              <button class="btn btn-danger me-2" (click)="onDelete(data.id)" [disabled]="toggleStatusArray[i]">
                 Delete
               </button>
             </td>

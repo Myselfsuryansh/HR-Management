@@ -20,6 +20,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { StudentModule } from './student/student.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthInterceptorInterceptor } from './service/auth-interceptor.interceptor';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +37,7 @@ import { AuthInterceptorInterceptor } from './service/auth-interceptor.intercept
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+ 
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
@@ -43,7 +47,12 @@ import { AuthInterceptorInterceptor } from './service/auth-interceptor.intercept
     MatListModule,
     ToastrModule.forRoot(),
     StudentModule,
-    AuthModule
+    AuthModule,
+    MatSlideToggleModule,
+    NgxSpinnerModule.forRoot(),
+    DropdownModule
+   
+ 
   ],
   providers: [
     {

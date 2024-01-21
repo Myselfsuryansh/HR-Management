@@ -1,7 +1,8 @@
+<div class="body">
 <div class="container form-group col">
   <div class="form-signin w-100 m-auto">
     <form [formGroup]="signupForm" (ngSubmit)="registerUser()">
-      <h3 class="h3 mb-3 font-weight-normal text-center">Please sign up</h3>
+      <h3 class="h3 mb-3 font-weight-normal text-center"><h1>Please sign up</h1></h3>
       <div class="mb-3">
         <label>Name</label>
         <input
@@ -37,7 +38,9 @@
           type="password"
           class="form-control"
           formControlName="password"
+          type="{{ hidePassword ? 'password' : 'text' }}"
           placeholder="Password"
+          (click)="togglePasswordVisibility()"
           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
           required
         />
@@ -46,8 +49,14 @@
         </span>
       </div>
       <div class="d-grid">
-        <button type="submit" class="btn btn-block btn-primary">Sign up</button>
+        <button *ngIf="isSignUp" type="submit" class="btn btn-block btn-primary">Sign up</button>
+        
+      </div>
+      <div class="d-grid mt-2">
+        <h2>Already Registered? Login Here</h2>
+        <button *ngIf="isSignUp" type="button" class="btn btn-block btn-secondary" (click)="onLogin()">Login</button>
       </div>
     </form>
   </div>
+</div>
 </div>

@@ -19,3 +19,14 @@
 .logout{
   margin-left: 65vw;
 }
+.rightmost{
+  margin-left: 70vw;
+  background-color: red;
+  color: red;
+
+}
+
+.ui-dropdown {
+  background-color: red;
+  color:black;
+}
