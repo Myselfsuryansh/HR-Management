@@ -231,10 +231,31 @@
   <div class="card-header bg-danger"><h6>Employee List</h6></div>
   <div class="card-body">
     <div class="row mt-2">
+      <div class="mb-3 col-4">
+
+        <div class="d-flex mb-5 col-12 ">
+          <input type="text" class="form-control" [(ngModel)]="nameSearch"  placeholder="Enter Value">
+          <br>
+          <select class="form-select keft" aria-label="Default Select"  [(ngModel)]="selectSearch" >
+            <option value="">Please Select</option>
+            <option value="department">Department</option>
+            <option value="empName">Employee Name</option>
+            <option value="mobile">Mobile</option>
+            <option value="gender">Gender</option>
+            <option value="joinDate">Joining Date</option>
+            <option value="email">Email</option>
+            
+          </select>
+        </div>
+        <!-- <label for="employeeSearch" class="form-label">Search Employee Name:</label>
+        <input type="text" class="form-control" id="employeeSearch" [(ngModel)]="searchTerm"  (onChange)="onSearchChange()"  placeholder="Enter employee name"> -->
+      </div>
       <table class="table table-bordered table-responsive table-striped">
         <thead>
-          <tr>
-            <th>Department</th>
+          <tr >
+            <th (click)="sortBy('department')">Department <span *ngIf="sortedColumn == 'department'" class="sort-icon">
+              <i class="fa" [ngClass]="{'fa-sort-asc': sortOrder === 'asc', 'fa-sort-desc': sortOrder === 'desc'}"></i>
+            </span></th>
             <th>Emplaoyee Name</th>
             <th>Mobile</th>
             <th>Gender</th>
@@ -245,7 +266,7 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let data of employeeData; let i = index" >
+          <tr *ngFor="let data of filteredEmployeeData|app:nameSearch:selectSearch ; let i = index" >
             
             <td>{{ data.department }}</td>
             <td>{{ data.empName }}</td>

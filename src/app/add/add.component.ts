@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../service/data.service';
 import { ToastrService } from 'ngx-toastr';
@@ -10,15 +10,18 @@ import Swal from 'sweetalert2';
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.css']
 })
-export class AddComponent implements OnInit {
-
+export class AddComponent implements  OnInit {
+  nameSearch:string='';
+  selectSearch:string=''
   employeeForm!: FormGroup;
   employeeData:any[]=[];
   submitted = false;
   isSaved = false;
   password1: string = '';
   confirmPass: string = '';
-  constructor(private fb: FormBuilder, private service:DataService, private toastr:ToastrService, private router:Router) {}
+  constructor(private fb: FormBuilder, private service:DataService, private toastr:ToastrService, private router:Router) {
+    this.filteredEmployeeData = this.employeeData;
+  }
   toggleStatusArray: boolean[] = this.employeeData.map(() => false);
   ngOnInit(): void {
     this.employeeForm = this.fb.group({
@@ -72,7 +75,7 @@ export class AddComponent implements OnInit {
     this.service.getData().subscribe((res:any)=>{
       if(res){
         console.log(res)
-        this.employeeData=res;
+        this.filteredEmployeeData=res;
       }
     })
   }
@@ -188,6 +191,58 @@ export class AddComponent implements OnInit {
   onToggleChange(index: number) {
     this.toggleStatusArray[index] = !this.toggleStatusArray[index];
   }
+
+
+
+  sortOrder: string = 'asc';
+  sortedColumn: string = ''; // Track the currently sorted column
+
+  sortBy(column: string): void {
+    if (column !== 'department') {
+
+      return;
+    }
+
+    if (this.sortedColumn === column) {
+      // Toggle sorting order for the same column
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Set sorting order for a new column
+      this.sortOrder = 'asc';
+      this.sortedColumn = column;
+    }
+
+    // Implement sorting logic based on the column
+    this.employeeData.sort((a, b) => {
+      const valueA = a[column];
+      const valueB = b[column];
+
+      if (valueA < valueB) {
+        return this.sortOrder === 'asc' ? -1 : 1;
+      } else if (valueA > valueB) {
+        return this.sortOrder === 'asc' ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+ 
+  }
+
+  searchTerm: string = '';
+
+  filteredEmployeeData!: any[];
+
+  applyFilter() {
+    // Use the filter method to match the search term with employee names
+    this.filteredEmployeeData = this.employeeData.filter(data =>
+      data.empName.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  onSearchChange() {
+    this.applyFilter();
+  }
+ 
 
   
 

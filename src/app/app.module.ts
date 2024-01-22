@@ -23,6 +23,9 @@ import { AuthInterceptorInterceptor } from './service/auth-interceptor.intercept
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { DropdownModule } from 'primeng/dropdown';
+import { SidebarModule } from 'primeng/sidebar';
+import { OrderByPipe } from './Pipe/order-by.pipe';
+import { AppPipe } from './Pipe/app.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +34,8 @@ import { DropdownModule } from 'primeng/dropdown';
     CapitalizedPipe,
     EditComponent,
     NavigationComponent,
+    OrderByPipe,
+    AppPipe,
   ],
   imports: [
     BrowserModule,
@@ -50,10 +55,12 @@ import { DropdownModule } from 'primeng/dropdown';
     AuthModule,
     MatSlideToggleModule,
     NgxSpinnerModule.forRoot(),
-    DropdownModule
+    DropdownModule,
+    
    
  
   ],
+  
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -61,6 +68,7 @@ import { DropdownModule } from 'primeng/dropdown';
       multi: true
     }
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

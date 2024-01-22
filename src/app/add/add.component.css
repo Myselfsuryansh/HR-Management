@@ -4,3 +4,6 @@
 input.ng-invalid.ng-touched {
     border: red 1px solid;
 }
+.keft{
+    margin-left: 6vw;
+}
