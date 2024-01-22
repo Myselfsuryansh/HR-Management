@@ -37,15 +37,24 @@ export class AddComponent implements  OnInit {
       empStatus: ['', Validators.requiredTrue],
     });
     this.getEmployeeData();
+    this.employeeForm.get('email')?.valueChanges.subscribe((email) => {
+      this.checkEmailAvailability(email);
+    });
+    this.employeeForm.get('mobile')?.valueChanges.subscribe((mobile) => {
+      this.checkMobileAvailability(mobile);
+    });
   }
 
   get f() {
-    return this.employeeForm.controls;
+    return this.employeeForm.controls?? {};
   }
 
   onSubmit() {
     if(this.employeeForm.value.empStatus==''){
       this.toastr.error('CheckBox is not checked')
+    }
+    if (this.employeeForm?.invalid || this.employeeForm?.get('email')?.hasError('emailInUse')) {
+      return;
     }
     this.submitted=true;
     this.isSaved = true;
@@ -242,8 +251,38 @@ export class AddComponent implements  OnInit {
   onSearchChange() {
     this.applyFilter();
   }
- 
+  itemsPerPage = 5;
+  currentPage = 1;
 
+  onPageChange(event: any): void {
+    this.currentPage = event.page + 1;
+  }
+
+  pagedEmployeeData(): any[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.filteredEmployeeData.slice(startIndex, endIndex);
+  }
+
+  checkEmailAvailability(email: string): void {
+    this.service.checkEmailAvailability(email).subscribe((isAvailable) => {
+      if (!isAvailable) {
+        this.employeeForm?.get('email')?.setErrors({ emailInUse: true });
+        this.toastr.error('Email is already used. Try Another Email')
+      }
+   
+    });
+  }
+
+  checkMobileAvailability(mobile: string): void {
+    this.service.checkMobileAvailability(mobile).subscribe((isAvailable) => {
+      if (!isAvailable) {
+        this.employeeForm?.get('mobile')?.setErrors({ mobile: true });
+        this.toastr.error('Mobile is already used. Try Another mobile')
+      }
+   
+    });
+  }
   
 
 }

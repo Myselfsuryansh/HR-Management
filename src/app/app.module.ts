@@ -26,6 +26,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { OrderByPipe } from './Pipe/order-by.pipe';
 import { AppPipe } from './Pipe/app.pipe';
+import { PaginatorModule } from 'primeng/paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +57,8 @@ import { AppPipe } from './Pipe/app.pipe';
     MatSlideToggleModule,
     NgxSpinnerModule.forRoot(),
     DropdownModule,
-    
+    PaginatorModule
+  
    
  
   ],

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
 
 
 @Injectable({
@@ -46,6 +47,18 @@ export class DataService  {
 
   deleteStudentData(id:any){
     return this.http.delete(`http://localhost:3000/student/${id}`)
+  }
+
+  apiUrl='http://localhost:3000/data'
+
+  checkEmailAvailability(email: string): Observable<boolean> {
+    const url = `${this.apiUrl}?email=${email}`;
+    return this.http.get<any[]>(url).pipe(map(employees => employees.length === 0));
+  }
+
+  checkMobileAvailability(mobile: string): Observable<boolean> {
+    const url = `${this.apiUrl}?mobile=${mobile}`;
+    return this.http.get<any[]>(url).pipe(map(employees => employees.length === 0));
   }
 
   

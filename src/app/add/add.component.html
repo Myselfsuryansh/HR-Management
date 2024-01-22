@@ -266,7 +266,7 @@
         </thead>
 
         <tbody>
-          <tr *ngFor="let data of filteredEmployeeData|app:nameSearch:selectSearch ; let i = index" >
+          <tr *ngFor="let data of pagedEmployeeData()|app:nameSearch:selectSearch ; let i = index" >
             
             <td>{{ data.department }}</td>
             <td>{{ data.empName }}</td>
@@ -294,8 +294,10 @@
               </button>
             </td>
           </tr>
+          
         </tbody>
       </table>
+      <p-paginator [rows]="itemsPerPage" [totalRecords]="filteredEmployeeData.length" (onPageChange)="onPageChange($event)"></p-paginator>
     </div>
   </div>
 </div>
