@@ -1,35 +1,47 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { DataService } from '../service/data.service';
 import { ToastrService } from 'ngx-toastr';
-import {  of } from 'rxjs';
+import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-function emailValidator(control:AbstractControl):{[key:string]:any}|null{
-  const email :string = control.value;
-  if(email && !email.toLowerCase().endsWith('.com')){
-    return {'invalidEmail':true}
+function emailValidator(
+  control: AbstractControl
+): { [key: string]: any } | null {
+  const email: string = control.value;
+  if (email && !email.toLowerCase().endsWith('.com')) {
+    return { invalidEmail: true };
   }
-  return null
+  return null;
 }
-
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css']
+  styleUrls: ['./add.component.css'],
 })
-export class AddComponent implements  OnInit {
-  nameSearch:string='';
-  selectSearch:string=''
+export class AddComponent implements OnInit {
+  nameSearch: string = '';
+  selectSearch: string = '';
   employeeForm!: FormGroup;
-  employeeData:any[]=[];
+  employeeData: any[] = [];
   submitted = false;
   isSaved = false;
   password1: string = '';
   confirmPass: string = '';
-  constructor(private fb: FormBuilder, private service:DataService, private toastr:ToastrService, private router:Router) {
+  constructor(
+    private fb: FormBuilder,
+    private service: DataService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {
     this.filteredEmployeeData = this.employeeData;
   }
   toggleStatusArray: boolean[] = this.employeeData.map(() => false);
@@ -42,10 +54,13 @@ export class AddComponent implements  OnInit {
       joinDate: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, emailValidator]],
       salary: ['', Validators.required],
-      file:[''],
-      documentType:[''],
+      file: [''],
+      documentType: [''],
       password: ['', Validators.required],
-      confirmPass: ['', [Validators.required,this.confirmedValidator.bind(this)]],
+      confirmPass: [
+        '',
+        [Validators.required, this.confirmedValidator.bind(this)],
+      ],
       empStatus: ['', Validators.requiredTrue],
     });
     this.getEmployeeData();
@@ -56,219 +71,145 @@ export class AddComponent implements  OnInit {
       this.checkMobileAvailability(mobile);
     });
   }
-  date1!: Date; 
-  
+  date1!: Date;
 
   get f() {
-    return this.employeeForm.controls?? {};
+    return this.employeeForm.controls ?? {};
   }
-
-  
-  
 
   confirmedValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.root.get('password');
     const confirmPassword = control.value;
 
     if (password && confirmPassword !== password.value) {
-  
       return { confirmedValidator: true };
     }
-
     return null;
   }
 
-
   onSubmit() {
-    if(this.employeeForm.value.empStatus==''){
-      this.toastr.error('CheckBox is not checked')
+    if (this.employeeForm.value.empStatus == '') {
+      this.toastr.error('CheckBox is not checked');
     }
-    if (this.employeeForm?.invalid || this.employeeForm?.get('email')?.hasError('emailInUse')) {
+    if (
+      this.employeeForm?.invalid ||
+      this.employeeForm?.get('email')?.hasError('emailInUse')
+    ) {
       return;
     }
-    this.submitted=true;
+    this.submitted = true;
     this.isSaved = true;
     if (this.employeeForm.invalid) {
       return;
     }
 
-    
-    let data ={
-      ...this.employeeForm.value
-      
-    }
+    let data = {
+      ...this.employeeForm.value,
+    };
     const documentType = this.employeeForm.value.documentType;
     const file = this.employeeForm.value.file;
-
     console.log('Document Type:', documentType);
     console.log('Selected File:', file);
-    
-    this.service.postData(data).subscribe((res:any)=>{
-      
-      if(res){
-       this.toastr.success('Data Added Successfully')
+
+    this.service.postData(data).subscribe((res: any) => {
+      if (res) {
+        this.toastr.success('Data Added Successfully');
         this.getEmployeeData();
-    
+      } else {
+        this.toastr.error(res.error, 'error');
       }
-      else{
-       this.toastr.error(res.error,'error')
-      }
-    })
+    });
     console.log(this.employeeForm.value);
   }
-
-  getEmployeeData(){
-    this.service.getData().subscribe((res:any)=>{
-      if(res){
-        console.log(res)
-        this.filteredEmployeeData=res;
+  getEmployeeData() {
+    this.service.getData().subscribe((res: any) => {
+      if (res) {
+        console.log(res);
+        this.filteredEmployeeData = res;
       }
-    })
+    });
   }
 
-  cancelBtn(){
-
+  cancelBtn() {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this data!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, Cancel it!',
-      cancelButtonText: 'No, keep it'
+      cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
         this.employeeForm.reset();
         this.toastr.success('Form Cancelled Successfully');
-    
+
         if (!this.isSaved) {
           return Swal.fire({
             title: 'Are you sure?',
             text: 'Are you sure you want to cancel?',
             icon: 'question',
-            // showCancelButton: true,
-            // confirmButtonText: 'Yes, cancel it!',
-            // cancelButtonText: 'No, keep it'
           }).then((innerResult) => {
             if (innerResult.isConfirmed) {
               return Promise.resolve(true);
             } else if (innerResult.dismiss === Swal.DismissReason.cancel) {
-              Swal.fire(
-                'Not Cancelled',
-                'The data is safe :)',
-                'info'
-              );
+              Swal.fire('Not Cancelled', 'The data is safe :)', 'info');
               return Promise.resolve(false);
             }
-            return null
+            return null;
           });
-        }
-         else {
+        } else {
           return Promise.resolve(true);
         }
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Not Cancelled',
-          'The data is safe :)',
-          'info'
-        );
+        Swal.fire('Not Cancelled', 'The data is safe :)', 'info');
         return Promise.resolve(false);
       }
-    
+
       // Add a default return statement to satisfy TypeScript
       return Promise.resolve(false);
     });
-    
-    
-
   }
 
-  resetBtn(){
-    // this.employeeForm.reset();
-    // this.toastr.success('Form Resetted Successfully');
-    // if (!this.isSaved) {
-    //   const result = window.confirm('There are unsaved changes! Are you sure?');
-    //   return of(result);
-    // }
-
-    // return of(true);
-
-    
+  resetBtn() {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this data!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, Reset it!',
-      cancelButtonText: 'No, keep it'
+      cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
         this.employeeForm.reset();
         this.toastr.success('Form Cancelled Successfully');
-    
+
         if (!this.isSaved) {
           return Swal.fire({
             title: 'Are you sure?',
             text: 'Are you sure you want to cancel?',
             icon: 'question',
-            // showCancelButton: true,
-            // confirmButtonText: 'Yes, cancel it!',
-            // cancelButtonText: 'No, keep it'
           }).then((innerResult) => {
             if (innerResult.isConfirmed) {
               return Promise.resolve(true);
             } else if (innerResult.dismiss === Swal.DismissReason.cancel) {
-              Swal.fire(
-                'Not Resetted',
-                'The data is safe :)',
-                'info'
-              );
+              Swal.fire('Not Resetted', 'The data is safe :)', 'info');
               return Promise.resolve(false);
             }
-            return null
+            return null;
           });
-        }
-         else {
+        } else {
           return Promise.resolve(true);
         }
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Not Resetted',
-          'The data is safe :)',
-          'info'
-        );
+        Swal.fire('Not Resetted', 'The data is safe :)', 'info');
         return Promise.resolve(false);
       }
-    
+
       // Add a default return statement to satisfy TypeScript
       return Promise.resolve(false);
     });
-    
-    
-
   }
 
-  // onDelete(id:any){
-    
-  //   if(confirm('Are you sure want to delete')){
-  //     if('Ok'){
-  //       this.service.delete(id).subscribe((res:any)=>{
-  //         if(res){
-  //           alert('Deleted');
-  //           this.getEmployeeData();
-  //         }
-  //         else{
-  //           alert('Error')
-  //         }
-  //       })
-       
-
-
-  //     }
-  //     else{
-  //       alert('Check once')
-  //     }
-  //   }
-  // }
   onDelete(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -276,39 +217,27 @@ export class AddComponent implements  OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
+      cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
         this.service.delete(id).subscribe((res: any) => {
           if (res) {
-            Swal.fire(
-              'Deleted!',
-              'The data has been deleted.',
-              'success'
-            );
+            Swal.fire('Deleted!', 'The data has been deleted.', 'success');
             this.getEmployeeData();
           } else {
-            Swal.fire(
-              'Error',
-              'Unable to delete the data.',
-              'error'
-            );
+            Swal.fire('Error', 'Unable to delete the data.', 'error');
           }
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Not Cancelled',
-          'The data is safe :)',
-          'info'
-        );
+        Swal.fire('Not Cancelled', 'The data is safe :)', 'info');
       }
     });
   }
 
-  keyPressNumbers(event:any) {
-    var charCode = (event.which) ? event.which : event.keyCode;
+  keyPressNumbers(event: any) {
+    var charCode = event.which ? event.which : event.keyCode;
     // Only Numbers 0-9
-    if ((charCode < 48 || charCode > 57)) {
+    if (charCode < 48 || charCode > 57) {
       event.preventDefault();
       return false;
     } else {
@@ -316,12 +245,8 @@ export class AddComponent implements  OnInit {
     }
   }
 
-  // canDeactivate(): Observable<boolean> {
-   
-  // }
-
-  goBack(){
-    this.router.navigate(['/home'])
+  goBack() {
+    this.router.navigate(['/home']);
   }
 
   password: string = '';
@@ -334,27 +259,21 @@ export class AddComponent implements  OnInit {
     this.toggleStatusArray[index] = !this.toggleStatusArray[index];
   }
 
-
-
   sortOrder: string = 'asc';
   sortedColumn: string = '';
 
   sortBy(column: string): void {
     if (column !== 'department') {
-
       return;
     }
 
     if (this.sortedColumn === column) {
-    
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     } else {
-    
       this.sortOrder = 'asc';
       this.sortedColumn = column;
     }
 
-    
     this.employeeData.sort((a, b) => {
       const valueA = a[column];
       const valueB = b[column];
@@ -367,7 +286,6 @@ export class AddComponent implements  OnInit {
         return 0;
       }
     });
- 
   }
 
   searchTerm: string = '';
@@ -376,7 +294,7 @@ export class AddComponent implements  OnInit {
 
   applyFilter() {
     // Use the filter method to match the search term with employee names
-    this.filteredEmployeeData = this.employeeData.filter(data =>
+    this.filteredEmployeeData = this.employeeData.filter((data) =>
       data.empName.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
@@ -401,9 +319,8 @@ export class AddComponent implements  OnInit {
     this.service.checkEmailAvailability(email).subscribe((isAvailable) => {
       if (!isAvailable) {
         this.employeeForm?.get('email')?.setErrors({ emailInUse: true });
-        this.toastr.error('Email is already used. Try Another Email')
+        this.toastr.error('Email is already used. Try Another Email');
       }
-   
     });
   }
 
@@ -411,17 +328,14 @@ export class AddComponent implements  OnInit {
     this.service.checkMobileAvailability(mobile).subscribe((isAvailable) => {
       if (!isAvailable) {
         this.employeeForm?.get('mobile')?.setErrors({ mobile: true });
-        this.toastr.error('Mobile is already used. Try Another mobile')
+        this.toastr.error('Mobile is already used. Try Another mobile');
       }
-   
     });
   }
 
   onDocumentTypeChange() {
     const documentType = this.employeeForm.value.documentType;
     const fileInput = document.getElementById('file') as HTMLInputElement;
-
-    // Set the allowed file types based on the selected document type
     switch (documentType) {
       case 'png':
         fileInput.accept = 'image/png';
@@ -433,9 +347,7 @@ export class AddComponent implements  OnInit {
         fileInput.accept = '.doc, .docx, .ppt, .pptx, .xls, .xlsx, .txt';
         break;
       default:
-        fileInput.accept = ''; // Reset to default
+        fileInput.accept = '';
     }
   }
-  
-
 }

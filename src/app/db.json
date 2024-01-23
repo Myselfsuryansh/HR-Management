@@ -252,6 +252,36 @@
       "confirmPass": "1234567890",
       "empStatus": true,
       "id": 25
+    },
+    {
+      "department": "Accounts",
+      "empName": "qazxse",
+      "mobile": "2323232324",
+      "gender": "Male",
+      "joinDate": "2024-01-22T18:30:00.000Z",
+      "email": "rfdfdf@gmail.com",
+      "salary": "454523",
+      "file": "C:\\fakepath\\Rectangle 161.png",
+      "documentType": "png",
+      "password": "zxcvbnm",
+      "confirmPass": "zxcvbnm",
+      "empStatus": true,
+      "id": 26
+    },
+    {
+      "department": "Accounts",
+      "empName": "qwertyuiop",
+      "mobile": "2324322434",
+      "gender": "Male",
+      "joinDate": "2024-01-23T18:30:00.000Z",
+      "email": "333@gmail.com",
+      "salary": "34343",
+      "file": "C:\\fakepath\\25th Ticket.pdf",
+      "documentType": "pdf",
+      "password": "00000",
+      "confirmPass": "00000",
+      "empStatus": true,
+      "id": 27
     }
   ],
   "student": [

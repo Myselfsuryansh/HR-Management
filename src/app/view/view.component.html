@@ -52,6 +52,11 @@
           <p class="form-control">{{ item.password }}</p>
         </div>
 
+        <div class="form-group col" style="cursor:pointer">
+          <label>File</label>
+          <p class="form-control" (click)="downloadFile()">{{ getFileName(item.file) }}</p>
+        </div>
+
         <div class="form-group col">
           <label>Confirm Password</label>
           <input type="password" class="form-control" required />
