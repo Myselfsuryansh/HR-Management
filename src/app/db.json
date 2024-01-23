@@ -194,6 +194,19 @@
       "confirmPass": "Bibhasinha",
       "empStatus": true,
       "id": 21
+    },
+    {
+      "department": "Accounts",
+      "empName": "Hero",
+      "mobile": "9878898787",
+      "gender": "Male",
+      "joinDate": "2024-01-10",
+      "email": "sur@yopmail.com",
+      "salary": "67868",
+      "password": "Bibhasinha",
+      "confirmPass": "Bibhasinha",
+      "empStatus": true,
+      "id": 22
     }
   ],
   "student": [

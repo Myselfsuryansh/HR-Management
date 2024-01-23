@@ -180,10 +180,9 @@
             <span *ngIf="f.confirmPass.errors?.required"
               >Confirm Password is Required</span
             >
-            <span *ngIf="f.confirmPass.errors?.confirmedValidator"
-              >Password and Confirm Password must be match</span
-            >
-            
+            <span *ngIf="f.confirmPass.hasError('confirmedValidator') && (f.confirmPass.dirty || submitted) && f.confirmPass.errors?.required" class="invalid-feedback">
+              Password and Confirm Password must match
+            </span>
           </span>
         </div>
       </div>

@@ -1,10 +1,12 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { DataService } from '../service/data.service';
 import { ToastrService } from 'ngx-toastr';
 import {  of } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+
+
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -33,7 +35,7 @@ export class AddComponent implements  OnInit {
       email: ['', [Validators.required, Validators.email]],
       salary: ['', Validators.required],
       password: ['', Validators.required],
-      confirmPass: ['', Validators.required],
+      confirmPass: ['', [Validators.required,this.confirmedValidator.bind(this)]],
       empStatus: ['', Validators.requiredTrue],
     });
     this.getEmployeeData();
@@ -48,6 +50,21 @@ export class AddComponent implements  OnInit {
   get f() {
     return this.employeeForm.controls?? {};
   }
+
+  
+
+  confirmedValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.root.get('password');
+    const confirmPassword = control.value;
+
+    if (password && confirmPassword !== password.value) {
+  
+      return { confirmedValidator: true };
+    }
+
+    return null;
+  }
+
 
   onSubmit() {
     if(this.employeeForm.value.empStatus==''){
