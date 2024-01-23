@@ -6,6 +6,14 @@ import {  of } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
+function emailValidator(control:AbstractControl):{[key:string]:any}|null{
+  const email :string = control.value;
+  if(email && !email.toLowerCase().endsWith('.com')){
+    return {'invalidEmail':true}
+  }
+  return null
+}
+
 
 @Component({
   selector: 'app-add',
@@ -32,7 +40,7 @@ export class AddComponent implements  OnInit {
       mobile: ['', Validators.required],
       gender: ['', Validators.required],
       joinDate: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, emailValidator]],
       salary: ['', Validators.required],
       password: ['', Validators.required],
       confirmPass: ['', [Validators.required,this.confirmedValidator.bind(this)]],
@@ -46,11 +54,14 @@ export class AddComponent implements  OnInit {
       this.checkMobileAvailability(mobile);
     });
   }
+  date1!: Date; 
+  
 
   get f() {
     return this.employeeForm.controls?? {};
   }
 
+  
   
 
   confirmedValidator(control: AbstractControl): ValidationErrors | null {
@@ -107,27 +118,123 @@ export class AddComponent implements  OnInit {
   }
 
   cancelBtn(){
-    this.employeeForm.reset();
-    this.toastr.success('Form Cancelled Successfully')
-    if (!this.isSaved) {
-      const result = window.confirm('Are your sure want to cancel? Yes or No');
-      return of(result);
-    }
 
-    return of(true);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this data!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Cancel it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.employeeForm.reset();
+        this.toastr.success('Form Cancelled Successfully');
+    
+        if (!this.isSaved) {
+          return Swal.fire({
+            title: 'Are you sure?',
+            text: 'Are you sure you want to cancel?',
+            icon: 'question',
+            // showCancelButton: true,
+            // confirmButtonText: 'Yes, cancel it!',
+            // cancelButtonText: 'No, keep it'
+          }).then((innerResult) => {
+            if (innerResult.isConfirmed) {
+              return Promise.resolve(true);
+            } else if (innerResult.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire(
+                'Not Cancelled',
+                'The data is safe :)',
+                'info'
+              );
+              return Promise.resolve(false);
+            }
+            return null
+          });
+        }
+         else {
+          return Promise.resolve(true);
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Not Cancelled',
+          'The data is safe :)',
+          'info'
+        );
+        return Promise.resolve(false);
+      }
+    
+      // Add a default return statement to satisfy TypeScript
+      return Promise.resolve(false);
+    });
+    
     
 
   }
 
   resetBtn(){
-    this.employeeForm.reset();
-    this.toastr.success('Form Resetted Successfully');
-    if (!this.isSaved) {
-      const result = window.confirm('There are unsaved changes! Are you sure?');
-      return of(result);
-    }
+    // this.employeeForm.reset();
+    // this.toastr.success('Form Resetted Successfully');
+    // if (!this.isSaved) {
+    //   const result = window.confirm('There are unsaved changes! Are you sure?');
+    //   return of(result);
+    // }
 
-    return of(true);
+    // return of(true);
+
+    
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this data!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, Reset it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.employeeForm.reset();
+        this.toastr.success('Form Cancelled Successfully');
+    
+        if (!this.isSaved) {
+          return Swal.fire({
+            title: 'Are you sure?',
+            text: 'Are you sure you want to cancel?',
+            icon: 'question',
+            // showCancelButton: true,
+            // confirmButtonText: 'Yes, cancel it!',
+            // cancelButtonText: 'No, keep it'
+          }).then((innerResult) => {
+            if (innerResult.isConfirmed) {
+              return Promise.resolve(true);
+            } else if (innerResult.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire(
+                'Not Resetted',
+                'The data is safe :)',
+                'info'
+              );
+              return Promise.resolve(false);
+            }
+            return null
+          });
+        }
+         else {
+          return Promise.resolve(true);
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Not Resetted',
+          'The data is safe :)',
+          'info'
+        );
+        return Promise.resolve(false);
+      }
+    
+      // Add a default return statement to satisfy TypeScript
+      return Promise.resolve(false);
+    });
+    
+    
 
   }
 
@@ -221,7 +328,7 @@ export class AddComponent implements  OnInit {
 
 
   sortOrder: string = 'asc';
-  sortedColumn: string = ''; // Track the currently sorted column
+  sortedColumn: string = '';
 
   sortBy(column: string): void {
     if (column !== 'department') {
@@ -230,15 +337,15 @@ export class AddComponent implements  OnInit {
     }
 
     if (this.sortedColumn === column) {
-      // Toggle sorting order for the same column
+    
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
     } else {
-      // Set sorting order for a new column
+    
       this.sortOrder = 'asc';
       this.sortedColumn = column;
     }
 
-    // Implement sorting logic based on the column
+    
     this.employeeData.sort((a, b) => {
       const valueA = a[column];
       const valueB = b[column];

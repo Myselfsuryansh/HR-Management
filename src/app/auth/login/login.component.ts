@@ -1,9 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from "ngx-spinner";
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+
+function emailValidator(control:AbstractControl):{[key:string]:any}|null{
+  const email :string = control.value;
+  if(email && !email.toLowerCase().endsWith('.com')){
+    return {'invalidEmail':true}
+  }
+  return null
+}
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -33,7 +42,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
     this.signinForm = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required,Validators.email,emailValidator]],
       password: ['', Validators.required],
     });
     this.spinner.show();
@@ -42,6 +51,10 @@ export class LoginComponent implements OnInit {
       
       this.spinner.hide();
     }, 5000);
+
+
+    
+    
   }
   // loginUser() {
   //   this.submitted = true;
@@ -88,7 +101,11 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/home'])
         } else {
           console.log('Login failed. Invalid Credentials:', users);
-          this.toastr.error('Invalid Credentials');
+          this.toastr.error('Invalid Credentials')
+          setTimeout(() => {
+            this.toastr.error('', 'New User?Kindly Register');
+        }, 3000);
+          
         }
       },
       (error: any) => {
@@ -143,5 +160,7 @@ export class LoginComponent implements OnInit {
       this.spinner.hide();
     }, 500);
   }
+
+ 
   
 }

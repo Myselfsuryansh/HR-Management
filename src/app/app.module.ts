@@ -27,6 +27,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { OrderByPipe } from './Pipe/order-by.pipe';
 import { AppPipe } from './Pipe/app.pipe';
 import { PaginatorModule } from 'primeng/paginator';
+import { CalendarModule } from 'primeng/calendar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,7 @@ import { PaginatorModule } from 'primeng/paginator';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
- 
+    CalendarModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,

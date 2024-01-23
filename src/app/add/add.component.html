@@ -88,7 +88,7 @@
           </span>
         </div>
 
-        <div class="form-group col">
+        <!-- <div class="form-group col">
           <label>Date of Join</label>
           <input
             type="date"
@@ -104,7 +104,24 @@
               >Joining Date is Required</span
             >
           </span>
-        </div>
+        </div> -->
+
+        <div class="form-group col">
+          <label>Date of Join</label>
+          <p-calendar
+              formControlName="joinDate"
+              [(ngModel)]="date1"
+              [showIcon]="true"
+              inputId="joinDate"
+              [ngClass]="{ 'is-invalid': submitted && f.joinDate.errors }"
+              [style]="{ height: '38px', width: '100%', border: '1px solid #ced4da', borderRadius: '4px', padding: '6px 12px' }"
+          ></p-calendar>
+          <span *ngIf="submitted && f.joinDate.errors" class="invalid-feedback">
+            <span *ngIf="f.joinDate.errors?.required"
+              >Joining Date is Required</span
+            >
+          </span>
+      </div>
 
         <div class="form-group col">
           <label>Email</label>
@@ -252,27 +269,28 @@
       <table class="table table-bordered table-responsive table-striped">
         <thead>
           <tr >
-            <th (click)="sortBy('department')">Department <span *ngIf="sortedColumn == 'department'" class="sort-icon">
+            <th class="text-center">ID</th>
+            <th class="text-center sort-icon" (click)="sortBy('department')">Department <span *ngIf="sortedColumn == 'department'" class="sort-icon text-center ">
               <i class="fa" [ngClass]="{'fa-sort-asc': sortOrder === 'asc', 'fa-sort-desc': sortOrder === 'desc'}"></i>
             </span></th>
-            <th>Emplaoyee Name</th>
-            <th>Mobile</th>
-            <th>Gender</th>
-            <th>Joining Date</th>
-            <th>Email</th>
+            <th class="text-center">Emplaoyee Name</th>
+            <th class="text-center">Mobile</th>
+            <th class="text-center">Gender</th>
+            <th class="text-center">Joining Date</th>
+            <th class="text-center">Email</th>
             <th class="text-center">Action</th>
           </tr>
         </thead>
 
         <tbody>
           <tr *ngFor="let data of pagedEmployeeData()|app:nameSearch:selectSearch ; let i = index" >
-            
-            <td>{{ data.department }}</td>
-            <td>{{ data.empName }}</td>
-            <td>{{ data.mobile }}</td>
-            <td>{{ data.gender }}</td>
-            <td>{{ data.joinDate }}</td>
-            <td>{{ data.email }}</td>
+            <td class="text-center">{{ data.id }}</td>
+            <td class="text-center">{{ data.department }}</td>
+            <td class="text-center">{{ data.empName }}</td>
+            <td class="text-center">{{ data.mobile }}</td>
+            <td class="text-center">{{ data.gender }}</td>
+            <td class="text-center">{{ data.joinDate| date:'yyyy-MM-dd' }}</td>
+            <td class="text-center">{{ data.email }}</td>
             <td class="text-center"> <mat-slide-toggle [(ngModel)]="toggleStatusArray[i]" color="primary" (onChange)="onToggleChange(i)"></mat-slide-toggle>
               <button
                 [routerLink]="['/edit', data.id]"

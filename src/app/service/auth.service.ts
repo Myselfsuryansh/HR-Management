@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -56,4 +56,14 @@ export class AuthService {
   updateUserPassword(userId: number, newPassword: string): Observable<any> {
     return this.http.patch(`${this.endPoint}/users/${userId}`, { password: newPassword });
   }
+
+  apiUrl='http://localhost:3000/api'
+
+  checkEmailAvailability(email: string): Observable<boolean> {
+    const url = `${this.apiUrl}?email=${email}`;
+    return this.http.get<any[]>(url).pipe(map(employees => employees.length === 0));
+  }
+
+ 
+ 
 }
