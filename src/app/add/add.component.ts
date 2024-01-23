@@ -42,6 +42,8 @@ export class AddComponent implements  OnInit {
       joinDate: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, emailValidator]],
       salary: ['', Validators.required],
+      file:[''],
+      documentType:[''],
       password: ['', Validators.required],
       confirmPass: ['', [Validators.required,this.confirmedValidator.bind(this)]],
       empStatus: ['', Validators.requiredTrue],
@@ -89,10 +91,17 @@ export class AddComponent implements  OnInit {
     if (this.employeeForm.invalid) {
       return;
     }
+
     
     let data ={
       ...this.employeeForm.value
+      
     }
+    const documentType = this.employeeForm.value.documentType;
+    const file = this.employeeForm.value.file;
+
+    console.log('Document Type:', documentType);
+    console.log('Selected File:', file);
     
     this.service.postData(data).subscribe((res:any)=>{
       
@@ -406,6 +415,26 @@ export class AddComponent implements  OnInit {
       }
    
     });
+  }
+
+  onDocumentTypeChange() {
+    const documentType = this.employeeForm.value.documentType;
+    const fileInput = document.getElementById('file') as HTMLInputElement;
+
+    // Set the allowed file types based on the selected document type
+    switch (documentType) {
+      case 'png':
+        fileInput.accept = 'image/png';
+        break;
+      case 'pdf':
+        fileInput.accept = 'application/pdf';
+        break;
+      case 'docs':
+        fileInput.accept = '.doc, .docx, .ppt, .pptx, .xls, .xlsx, .txt';
+        break;
+      default:
+        fileInput.accept = ''; // Reset to default
+    }
   }
   
 
